@@ -1,1 +1,2 @@
-# smucode-service-discovery
+# smucode-service-registry
+

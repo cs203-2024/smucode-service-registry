@@ -1,4 +1,4 @@
-name: Build image and push to ECR on merge to dev
+name: Build image and push to ECR
 
 on: # workflow trigger on manual, PR & push to dev
   push:
@@ -47,6 +47,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
+          debug-log: true
 
       - name: Login to Amazon ECR
         id: login-ecr

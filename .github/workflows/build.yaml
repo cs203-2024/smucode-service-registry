@@ -45,7 +45,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::010526274418:role/smucode-cicd-github-actions-role
+          role-to-assume: ${{ secrets.AWS_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
@@ -56,9 +56,12 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          SERVICE_NAME: ${{ github.event.repository.name }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.DOCKER_TAG }}
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ env.DOCKER_TAG }}
+          docker build -t $ECR_REPOSITORY/$SERVICE_NAME:$IMAGE_TAG .
+          # Optionally tag the image as 'latest'
+          docker tag $ECR_REPOSITORY/$SERVICE_NAME:$IMAGE_TAG $ECR_REPOSITORY/$SERVICE_NAME:latest
+          # Push both tags to ECR
+          docker push $ECR_REPOSITORY/$SERVICE_NAME:$IMAGE_TAG
+          docker push $ECR_REPOSITORY/$SERVICE_NAME:latest

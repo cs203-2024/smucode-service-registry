@@ -59,9 +59,9 @@ jobs:
           SERVICE_NAME: ${{ github.event.repository.name }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REPOSITORY/$SERVICE_NAME:$IMAGE_TAG .
-          # Optionally tag the image as 'latest'
-          docker tag $ECR_REPOSITORY/$SERVICE_NAME:$IMAGE_TAG $ECR_REPOSITORY/$SERVICE_NAME:latest
-          # Push both tags to ECR
-          docker push $ECR_REPOSITORY/$SERVICE_NAME:$IMAGE_TAG
-          docker push $ECR_REPOSITORY/$SERVICE_NAME:latest
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest

@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  cloud:
+    inetutils:
+      preferredNetworks:
+        - 10.0.0.0/24
+
+eureka:
+  instance:
+    instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+    preferIpAddress: true
+    ip-address: ${ECS_CONTAINER_METADATA_URI_V4}
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server.your-internal-domain:8761/eureka/

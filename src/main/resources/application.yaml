@@ -1,13 +1,7 @@
+# Base configuration
 server:
   port: 8761
 
 spring:
   application:
     name: service-registry
-
-eureka:
-  client:
-    register-with-eureka: false # Disable registering of the Eureka server itself
-    fetch-registry: false # Disable fetching registry information from the Eureka server
-    service-url:
-      defaultZone: http://localhost:8761/eureka/

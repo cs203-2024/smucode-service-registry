@@ -5,7 +5,7 @@ RUN groupadd -r spring && useradd -r -g spring spring
 
 WORKDIR /app
 
-COPY target/service-registry-0.0.1-SNAPSHOT.jar service-registry.jar
+COPY target/smucode-0.0.1-SNAPSHOT.jar smucode-service-registry.jar
 
 # Set ownership to the non-root user
 RUN chown -R spring:spring /app
@@ -17,4 +17,4 @@ EXPOSE 8761
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD wget -q --spider http://localhost:8761/actuator/health || exit 1
 
-ENTRYPOINT ["java", "-jar", "service-registry.jar"]
+ENTRYPOINT ["java", "-jar", "smucode-service-registry.jar"]

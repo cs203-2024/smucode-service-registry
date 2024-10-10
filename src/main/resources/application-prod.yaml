@@ -11,7 +11,9 @@ eureka:
   instance:
     instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
     preferIpAddress: true
-    ip-address: ${ECS_CONTAINER_METADATA_URI_V4}
+    ip-address: ${spring.cloud.client.ip-address}
   client:
+    register-with-eureka: false # Disable registering of the Eureka server itself
+    fetch-registry: false # Disable fetching registry information from the Eureka server
     serviceUrl:
-      defaultZone: http://eureka-server.your-internal-domain:8761/eureka/
+      defaultZone: http://eureka-server.smucode:8761/eureka/
